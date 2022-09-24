@@ -1,11 +1,14 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import recipiesContext from './RecipiesContext';
 
 function RecipiesProvider({ children }) {
   const [settings, setSettings] = useState('set');
 
-  const contextValues = useMemo(() => ({ settings, setSettings }), []);
+  const contextValues = {
+    settings,
+    setSettings,
+  };
   return (
     <recipiesContext.Provider value={ contextValues }>
       { children }

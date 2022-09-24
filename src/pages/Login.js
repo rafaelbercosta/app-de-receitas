@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import storage from '../services/Storage';
+import PropTypes from 'prop-types';
+import { setStorage } from '../services/Storage';
 
 const MINIMUM_PASSWORD_LENGTH = 6;
 
-function Login() {
+function Login({ history }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,9 +18,10 @@ function Login() {
   };
 
   const handleClick = () => {
-    storage('user', { email });
-    storage('mealsToken', 1);
-    storage('drinksToken', 1);
+    setStorage('user', { email });
+    setStorage('mealsToken', 1);
+    setStorage('drinksToken', 1);
+    history.push('/meals');
   };
 
   const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -59,5 +61,11 @@ function Login() {
     </section>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default Login;

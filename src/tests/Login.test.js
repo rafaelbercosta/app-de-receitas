@@ -63,4 +63,19 @@ describe('Testando a página de Login', () => {
 
     expect(button).not.toBeDisabled();
   });
+  it('Testa se ao clicar no botão localStorage é chamado', () => {
+    jest.spyOn(Storage.prototype, 'setItem');
+    Storage.prototype.setItem = jest.fn();
+
+    renderWithRouter(<App />);
+    const inputEmail = screen.getByTestId(idEMail);
+    const inputPassword = screen.getByTestId(idPassword);
+    const button = screen.getByRole('button', { name: /entrar/i });
+
+    userEvent.type(inputEmail, emailTest);
+    userEvent.type(inputPassword, '1234567');
+    userEvent.click(button);
+
+    expect(localStorage.setItem).toHaveBeenCalledTimes(3);
+  });
 });

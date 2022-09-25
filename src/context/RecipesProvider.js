@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import recipiesContext from './RecipiesContext';
+import recipesContext from './RecipesContext';
 
-function RecipiesProvider({ children }) {
+function RecipesProvider({ children }) {
   const [settings, setSettings] = useState('set');
 
   const contextValues = {
@@ -10,14 +10,14 @@ function RecipiesProvider({ children }) {
     setSettings,
   };
   return (
-    <recipiesContext.Provider value={ contextValues }>
+    <recipesContext.Provider value={ contextValues }>
       { children }
-    </recipiesContext.Provider>
+    </recipesContext.Provider>
   );
 }
 
-RecipiesProvider.propTypes = {
+RecipesProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default RecipiesProvider;
+export default RecipesProvider;

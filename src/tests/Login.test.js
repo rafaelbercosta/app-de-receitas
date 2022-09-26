@@ -67,7 +67,8 @@ describe('Testando a página de Login', () => {
     jest.spyOn(Storage.prototype, 'setItem');
     Storage.prototype.setItem = jest.fn();
 
-    renderWithRouter(<App />);
+    const { history } = renderWithRouter(<App />);
+
     const inputEmail = screen.getByTestId(idEMail);
     const inputPassword = screen.getByTestId(idPassword);
     const button = screen.getByRole('button', { name: /entrar/i });
@@ -77,5 +78,6 @@ describe('Testando a página de Login', () => {
     userEvent.click(button);
 
     expect(localStorage.setItem).toHaveBeenCalledTimes(3);
+    expect(history.location.pathname).toBe('/meals');
   });
 });

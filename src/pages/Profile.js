@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import recipesContext from '../context/RecipesContext';
+import Footer from '../components/Footer';
 
 function Profile({ history }) {
   const { user } = useContext(recipesContext);
@@ -37,6 +38,7 @@ function Profile({ history }) {
       >
         Logout
       </button>
+      <Footer />
     </section>
   );
 }

@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import recipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
-  const [settings, setSettings] = useState('set');
+  const [user, setUser] = useState('');
 
   const contextValues = {
-    settings,
-    setSettings,
+    user,
+    setUser,
   };
   return (
     <recipesContext.Provider value={ contextValues }>

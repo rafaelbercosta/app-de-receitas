@@ -1,17 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { getStorage } from '../services/Storage';
+import Header from '../components/Header';
+import recipesContext from '../context/RecipesContext';
 
 function Profile({ history }) {
-  const [user, setUser] = useState('');
-
-  useEffect(() => {
-    setUser(getStorage('user').email);
-  }, []);
+  const { user } = useContext(recipesContext);
 
   return (
     <section>
-      <p data-testid="profile-email">{ user }</p>
+      <Header page="Profile" search={ false } />
+      <h1 data-testid="profile-email">{ user }</h1>
       <button
         type="button"
         data-testid="profile-done-btn"

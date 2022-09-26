@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { setStorage } from '../services/Storage';
+import recipesContext from '../context/RecipesContext';
 
 const MINIMUM_PASSWORD_LENGTH = 6;
 
@@ -17,10 +18,12 @@ function Login({ history }) {
     setFunctions[target.name](target.value);
   };
 
+  const { setUser } = useContext(recipesContext);
   const handleClick = () => {
     setStorage('user', { email });
     setStorage('mealsToken', 1);
     setStorage('drinksToken', 1);
+    setUser(email);
     history.push('/meals');
   };
 

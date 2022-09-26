@@ -29,7 +29,7 @@ function Login({ history }) {
   || !emailRegex.test(email);
 
   return (
-    <section>
+    <form>
       <label htmlFor="email">
         <input
           type="email"
@@ -58,7 +58,7 @@ function Login({ history }) {
       >
         Entrar
       </button>
-    </section>
+    </form>
   );
 }
 

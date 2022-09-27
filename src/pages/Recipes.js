@@ -5,22 +5,51 @@ import Header from '../components/Header';
 import Card from '../components/Card';
 import recipesContext from '../context/RecipesContext';
 
-function Recipes({ location: { pathname }}) {
-  const { isFilter, recipesToRender, whatIsRender} = useContext(recipesContext);
+const MAXIMUM_CARD = 11;
+
+function Recipes({ location: { pathname } }) {
+  const { isFilter, recipesToRender, whatIsRender } = useContext(recipesContext);
   return (
     <div>
       <Header page={ pathname } search />
       {
-        isFilter ? recipesToRender.filter((_recipe, i) => i <= 11).map((recipe, i) => {
+        isFilter ? recipesToRender.filter((_recipe, i) => i <= MAXIMUM_CARD)
+          .map((recipe, i) => {
+            if (whatIsRender === 'meals') {
+              return (
+                <Card
+                  image={ recipe.strMealThumb }
+                  name={ recipe.strMeal }
+                  index={ i }
+                />
+              );
+            }
+            return (
+              <Card
+                key={ `${i}-${recipe.strDrink}` }
+                image={ recipe.strDrinkThumb }
+                name={ recipe.strDrink }
+                index={ i }
+              />
+            );
+          }) : recipesToRender.map((meal, i) => {
           if (whatIsRender === 'meals') {
-            return <Card image={ recipe.strMealThumb } name={ recipe.strMeal } index={ i }/>
+            return (
+              <Card
+                image={ meal.strMealThumb }
+                name={ meal.strMeal }
+                index={ i }
+              />
+            );
           }
-          return <Card image={ recipe.strDrinkThumb } name={ recipe.strDrink } index={ i }/>
-        }) : recipesToRender.map((recipe, i) => {
-          if (whatIsRender === 'meals') {
-            return <Card image={ recipe.strMealThumb } name={ recipe.strMeal } index={ i }/>
-          }
-          return <Card image={ recipe.strDrinkThumb } name={ recipe.strDrink } index={ i }/>
+          return (
+            <Card
+              key={ `${i}-${recipe.strDrink}` }
+              image={ recipe.strDrinkThumb }
+              name={ recipe.strDrink }
+              index={ i }
+            />
+          );
         })
       }
       <Footer />

@@ -27,7 +27,6 @@ function SearchBar({ page }) {
       },
     };
     const filterResponse = fetchFilters[page][filterSelected];
-    console.log(filterResponse, filterSelected, page);
     setRecipesToRender(filterResponse);
   };
 

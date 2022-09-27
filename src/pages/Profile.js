@@ -4,12 +4,12 @@ import Header from '../components/Header';
 import recipesContext from '../context/RecipesContext';
 import Footer from '../components/Footer';
 
-function Profile({ history }) {
+function Profile({ history, location: { pathname } }) {
   const { user } = useContext(recipesContext);
 
   return (
     <section>
-      <Header page="Profile" search={ false } />
+      <Header page={ pathname } search={ false } />
       <h1 data-testid="profile-email">{ user }</h1>
       <button
         type="button"
@@ -46,6 +46,9 @@ function Profile({ history }) {
 Profile.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
+  }).isRequired,
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
   }).isRequired,
 };
 

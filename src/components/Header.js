@@ -5,8 +5,16 @@ import ProfileIcon from '../images/profileIcon.svg';
 import SearchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-export default function Header({ page, search }) {
+function Header({ page, search }) {
   const [researched, setResearched] = useState(false);
+
+  const titles = {
+    '/meals': 'Meals',
+    '/drinks': 'Drinks',
+    '/profile': 'Profile',
+    '/done-recipes': 'Done Recipes',
+    '/favorite-recipes': 'Favorite Recipes',
+  };
 
   const handleSearch = () => {
     if (researched) {
@@ -24,7 +32,7 @@ export default function Header({ page, search }) {
           <Link to="/profile">
             <img src={ ProfileIcon } alt="Profile Icon" data-testid="profile-top-btn" />
           </Link>
-          <h1 data-testid="page-title">{page}</h1>
+          <h1 data-testid="page-title">{ titles[page] }</h1>
           {search && (
             <button type="button" onClick={ handleSearch }>
               <img src={ SearchIcon } alt="Search Icon" data-testid="search-top-btn" />
@@ -41,3 +49,5 @@ Header.propTypes = {
   page: PropTypes.string.isRequired,
   search: PropTypes.bool.isRequired,
 };
+
+export default Header;

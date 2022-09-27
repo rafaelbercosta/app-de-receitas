@@ -1,10 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
-export default function FavoriteRecipes() {
+function FavoriteRecipes({ location: { pathname } }) {
   return (
     <div>
-      <Header page="Favorite Recipes" search={ false } />
+      <Header page={ pathname } search={ false } />
     </div>
   );
 }
+
+FavoriteRecipes.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export default FavoriteRecipes;

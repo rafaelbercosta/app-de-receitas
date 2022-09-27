@@ -19,7 +19,8 @@ function Login({ history }) {
   };
 
   const { setUser } = useContext(recipesContext);
-  const handleClick = () => {
+
+  const handleClick = async () => {
     setStorage('user', { email });
     setStorage('mealsToken', 1);
     setStorage('drinksToken', 1);

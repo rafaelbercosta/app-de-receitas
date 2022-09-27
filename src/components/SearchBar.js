@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchMealsByIngredient,
   fetchMealsByName,
@@ -9,63 +10,82 @@ import { fetchDrinksByIngredient,
 import recipesContext from '../context/RecipesContext';
 
 function SearchBar({ page }) {
-  const { setRecipesToRender } = useContext(recipesContext);
+  const history = useHistory();
+  const { setRecipesToRender, setIsFilter, setWhatIsRender } = useContext(recipesContext);
   const [filterSelected, setFilterSelected] = useState('');
   const [search, setSearch] = useState('');
-  console.log(search.length);
+
+  const alertReturn = () => {
+    global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    return [];
+  };
+
   const chooseMealsFilter = async () => {
     if (filterSelected === 'ingredient') {
       const meals = await fetchMealsByIngredient(search);
-      return meals;
+      const mealsReturn = !meals ? alertReturn() : meals;
+      return mealsReturn;
     }
     if (filterSelected === 'name') {
       const meals = await fetchMealsByName(search);
-      return meals;
+      const mealsReturn = !meals ? alertReturn() : meals;
+      return mealsReturn;
     }
     if (filterSelected === 'letter' && search.length === 1) {
       const meals = await fetchMealsByLetter(search);
-      return meals;
+      const mealsReturn = !meals ? alertReturn() : meals;
+      return mealsReturn;
     }
     global.alert('Your search must have only 1 (one) character');
+    return [];
   };
 
   const chooseDrinksFilter = async () => {
     if (filterSelected === 'ingredient') {
       const drinks = await fetchDrinksByIngredient(search);
-      return drinks;
+      const drinksReturn = !drinks ? alertReturn() : drinks;
+      return drinksReturn;
     }
     if (filterSelected === 'name') {
       const drinks = await fetchDrinksByName(search);
-      return drinks;
+      const drinksReturn = !drinks ? alertReturn() : drinks;
+      return drinksReturn;
     }
     if (filterSelected === 'letter' && search.length === 1) {
       const drinks = await fetchDrinksByLetter(search);
-      return drinks;
+      const drinksReturn = !drinks ? alertReturn() : drinks;
+      return drinksReturn;
     }
+
     global.alert('Your search must have only 1 (one) character');
+    return [];
   };
 
-  // const redirectToDetails = (array) => {
-  //   const ways = {
-  //     '/meals': `/meals/${array[0].idMeal}`,
-  //     '/drinks': `/drinks/${array[0].idDrink}`,
-  //   };
+  const redirectToDetails = (array) => {
+    if (array.length === 1) {
+      const ways = {
+        '/meals': `/meals/${array[0].idMeal}`,
+        '/drinks': `/drinks/${array[0].idDrink}`,
+      };
 
-  //   if (array.length === 1) {
-  //     history.push(ways[page]);
-  //   }
-  // };
+      history.push(ways[page]);
+    }
+  };
 
   const handleSearch = async () => {
     if (page === '/meals') {
       const meals = await chooseMealsFilter();
       setRecipesToRender(meals);
-      // redirectToDetails(meals);
+      setIsFilter((prev) => !prev);
+      setWhatIsRender('meals');
+      redirectToDetails(meals);
     }
     if (page === '/drinks') {
       const drinks = await chooseDrinksFilter();
       setRecipesToRender(drinks);
-      // redirectToDetails(drinks);
+      setIsFilter((prev) => !prev);
+      setWhatIsRender('drink');
+      redirectToDetails(drinks);
     }
   };
 

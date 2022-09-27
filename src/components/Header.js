@@ -5,7 +5,7 @@ import ProfileIcon from '../images/profileIcon.svg';
 import SearchIcon from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
 
-function Header({ page, search }) {
+function Header({ page, search}) {
   const [researched, setResearched] = useState(false);
 
   const titles = {

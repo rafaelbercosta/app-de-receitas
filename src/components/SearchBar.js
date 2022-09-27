@@ -5,7 +5,7 @@ import { fetchMealsByIngredient,
   fetchMealsByLetter } from '../services/fetchMealsFilters';
 import { fetchDrinksByIngredient,
   fetchDrinksByName,
-  fetchDrinksByLetter} from '../services/fetchDrinksFilter';
+  fetchDrinksByLetter } from '../services/fetchDrinksFilter';
 import recipesContext from '../context/RecipesContext';
 
 function SearchBar({ page }) {

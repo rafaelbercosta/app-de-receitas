@@ -26,7 +26,7 @@ function SearchBar({ page }) {
         letter: fetchDrinksByLetter(search),
       },
     };
-    () => fetchFilters[page][filterSelected];
+    const filterResponse = fetchFilters[page][filterSelected];
     console.log(filterResponse, filterSelected, page);
     setRecipesToRender(filterResponse);
   };

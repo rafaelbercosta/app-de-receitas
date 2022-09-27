@@ -32,21 +32,21 @@ function Recipes({ location: { pathname } }) {
                 index={ i }
               />
             );
-          }) : recipesToRender.map((meal, i) => {
+          }) : recipesToRender.map((recipes, i) => {
           if (whatIsRender === 'meals') {
             return (
               <Card
-                image={ meal.strMealThumb }
-                name={ meal.strMeal }
+                image={ recipes.strMealThumb }
+                name={ recipes.strMeal }
                 index={ i }
               />
             );
           }
           return (
             <Card
-              key={ `${i}-${recipe.strDrink}` }
-              image={ recipe.strDrinkThumb }
-              name={ recipe.strDrink }
+              key={ `${i}-${recipes.strDrink}` }
+              image={ recipes.strDrinkThumb }
+              name={ recipes.strDrink }
               index={ i }
             />
           );

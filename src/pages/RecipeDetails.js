@@ -20,7 +20,7 @@ function RecipeDetails({ location: { pathname } }) {
 
   const fetchDetail = async () => {
     const teste = getStorage('doneRecipes');
-    console.log(JSON.parse(doneRecipes));
+    // console.log(JSON.parse(doneRecipes));
     // console.log('oi', teste);
     setDoneRecipes(teste);
     if (pathname.includes('meals')) {

@@ -231,8 +231,8 @@ describe('28 - Desenvolva um botão de nome \"Start Recipe\" que deve ficar fixo
   });
 });
 
-describe.only('29 - Implemente a solução de forma que, caso a receita já tenha sido feita, o botão \"Start Recipe\" desapareça', () => {
-  it.only('Verifica se botão de iniciar receita não é visível na tela de detalhes de uma comida', () => {
+describe('29 - Implemente a solução de forma que, caso a receita já tenha sido feita, o botão \"Start Recipe\" desapareça', () => {
+  it('Verifica se botão de iniciar receita não é visível na tela de detalhes de uma comida', () => {
     cy.visit('http://localhost:3000/meals/52771', {
       onBeforeLoad(win) {
         const doneRecipes = [{

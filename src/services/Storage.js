@@ -3,7 +3,6 @@ export const setStorage = (key, value) => {
 };
 
 export const getStorage = (key) => {
-  const response = localStorage.getItem('doneRecipes');
-  console.log(response, key);
+  const response = localStorage.getItem(key);
   return response || [];
 };

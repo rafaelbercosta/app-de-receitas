@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Carousel from 'react-bootstrap/Carousel';
+// import Carousel from 'react-bootstrap/Carousel';
 import CardDetails from '../components/CardDetails';
-import CardRecommendation from '../components/CardRecommendation';
+// import CardRecommendation from '../components/CardRecommendation';
 import { getStorage } from '../services/Storage';
 import { fetchDetailsDrinks, fetchDetailsMeals } from '../services/fetchDetails';
 import { fetchDrinksRecommendation,
   fetchMealsRecommendation } from '../services/fetchRecommendation';
 import '../styles/RecipeDetails.css';
 
-const LIMIT_OF_RECOMMENDATION = 5;
+// const LIMIT_OF_RECOMMENDATION = 5;
 
 function RecipeDetails({ location: { pathname } }) {
   const [recipeDetails, setRecipeDetails] = useState([]);
-  const [recommendation, setRecommendation] = useState([]);
+  // const [recommendation, setRecommendation] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
 
   const urlSplit = pathname.split('/');

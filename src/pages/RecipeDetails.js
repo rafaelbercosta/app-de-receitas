@@ -34,7 +34,7 @@ function RecipeDetails({ location: { pathname } }) {
       setRecipeDetails(drinkDetails);
       setRecommendation(mealsRecommendation);
     }
-    console.log(doneRecipes);
+    // console.log(doneRecipes);
   };
 
   useEffect(() => {

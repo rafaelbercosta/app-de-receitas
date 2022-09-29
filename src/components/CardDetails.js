@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function CardDetails({ recipe, pathname }) {
   const objectEntries = Object.entries(recipe);
-
+  console.log(recipe);
   return (
     <div>
       {
@@ -54,6 +54,7 @@ function CardDetails({ recipe, pathname }) {
             </p>
             <ul>
               {
+
                 objectEntries
                   .filter((entrie) => entrie[0].includes('strIngredient') && entrie[1])
                   .map((ingredient, i) => (
@@ -64,6 +65,7 @@ function CardDetails({ recipe, pathname }) {
                         ))[i][1]}`}
                     </li>
                   ))
+
               }
             </ul>
             <p data-testid="instructions">{recipe.strInstructions}</p>

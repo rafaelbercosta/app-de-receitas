@@ -14,7 +14,7 @@ import '../styles/RecipeDetails.css';
 
 function RecipeDetails() {
   const { pathname } = useLocation();
-  const [ setRecipeDetails] = useState([]);
+  const [ setRecipeDetails ] = useState([]);
   // const [recommendation, setRecommendation] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
 

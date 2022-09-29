@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // import Carousel from 'react-bootstrap/Carousel';
-import { useLocation } from 'react-router-dom';
-// import CardDetails from '../components/CardDetails';
+import CardDetails from '../components/CardDetails';
 // import CardRecommendation from '../components/CardRecommendation';
 import { getStorage } from '../services/Storage';
 import { fetchDetailsDrinks, fetchDetailsMeals } from '../services/fetchDetails';
-// import { fetchDrinksRecommendation,
-// fetchMealsRecommendation } from '../services/fetchRecommendation';
+import { fetchDrinksRecommendation,
+  fetchMealsRecommendation } from '../services/fetchRecommendation';
 import '../styles/RecipeDetails.css';
 
 // const LIMIT_OF_RECOMMENDATION = 5;
 
-function RecipeDetails() {
-  const { pathname } = useLocation();
-  // const [ setRecipeDetails ] = useState([]);
+function RecipeDetails({ location: { pathname } }) {
+  const [recipeDetails, setRecipeDetails] = useState([]);
   // const [recommendation, setRecommendation] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
 
@@ -27,16 +25,14 @@ function RecipeDetails() {
     setDoneRecipes(teste);
     if (pathname.includes('meals')) {
       const mealDetails = await fetchDetailsMeals(urlSplit[2]);
-      console.log(mealDetails);
-      // const drinksRecommendation = await fetchDrinksRecommendation();
-      // setRecipeDetails(mealDetails);
-      //  setRecommendation(drinksRecommendation);
+      const drinksRecommendation = await fetchDrinksRecommendation();
+      setRecipeDetails(mealDetails);
+      setRecommendation(drinksRecommendation);
     } else {
       const drinkDetails = await fetchDetailsDrinks(urlSplit[2]);
-      console.log(drinkDetails);
-      //  const mealsRecommendation = await fetchMealsRecommendation();
-      // setRecipeDetails(drinkDetails);
-      // setRecommendation(mealsRecommendation);
+      const mealsRecommendation = await fetchMealsRecommendation();
+      setRecipeDetails(drinkDetails);
+      setRecommendation(mealsRecommendation);
     }
     // console.log(doneRecipes);
   };
@@ -47,7 +43,7 @@ function RecipeDetails() {
 
   return (
     <section>
-      {/* {
+      {
         recipeDetails.map((details, i) => (
           <CardDetails
             key={ `${i}-${pathname}` }
@@ -55,7 +51,7 @@ function RecipeDetails() {
             pathname={ pathname }
           />
         ))
-      } */}
+      }
       {/* <h1>Recommended</h1>
       <Carousel>
         {

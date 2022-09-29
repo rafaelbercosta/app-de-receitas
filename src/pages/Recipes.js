@@ -1,19 +1,24 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link, useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Card from '../components/Card';
 import recipesContext from '../context/RecipesContext';
 import fetchMeals from '../services/fetchMeals';
 import fetchDrinks from '../services/fetchDrinks';
+import CategoriesFilters from '../components/CategoriesFilter';
 
 const MAXIMUM_CARD = 11;
 
-function Recipes({ location: { pathname } }) {
-  const { recipesToRender,
+function Recipes() {
+  const { pathname } = useLocation();
+  const {
+    recipesToRender,
     setRecipesToRender,
     setDrinks,
-    setMeals } = useContext(recipesContext);
+    setMeals,
+  } = useContext(recipesContext);
 
   const requisitions = async () => {
     const meals = await fetchMeals();
@@ -29,30 +34,40 @@ function Recipes({ location: { pathname } }) {
 
   useEffect(() => {
     requisitions();
-  }, []);
+  }, [pathname]);
 
   return (
     <div>
       <Header page={ pathname } search />
+      <CategoriesFilters />
       {
         recipesToRender.filter((_recipe, i) => i <= MAXIMUM_CARD)
           .map((recipe, i) => {
             if (pathname === '/meals') {
               return (
-                <Card
-                  image={ recipe.strMealThumb }
-                  name={ recipe.strMeal }
-                  index={ i }
-                />
+                <Link
+                  key={ `${i}-${recipe.strMeal}` }
+                  to={ `/meals/${recipe.idMeal}` }
+                >
+                  <Card
+                    image={ recipe.strMealThumb }
+                    name={ recipe.strMeal }
+                    index={ i }
+                  />
+                </Link>
               );
             }
             return (
-              <Card
+              <Link
                 key={ `${i}-${recipe.strDrink}` }
-                image={ recipe.strDrinkThumb }
-                name={ recipe.strDrink }
-                index={ i }
-              />
+                to={ `/drinks/${recipe.idDrink}` }
+              >
+                <Card
+                  image={ recipe.strDrinkThumb }
+                  name={ recipe.strDrink }
+                  index={ i }
+                />
+              </Link>
             );
           })
       }

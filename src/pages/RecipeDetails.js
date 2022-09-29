@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import Carousel from 'react-bootstrap/Carousel';
+import Carousel from 'react-bootstrap/Carousel';
+import { useLocation } from 'react-router-dom';
 import CardDetails from '../components/CardDetails';
-// import CardRecommendation from '../components/CardRecommendation';
+import CardRecommendation from '../components/CardRecommendation';
 import { getStorage } from '../services/Storage';
 import { fetchDetailsDrinks, fetchDetailsMeals } from '../services/fetchDetails';
 import { fetchDrinksRecommendation,
-  fetchMealsRecommendation } from '../services/fetchRecommendation';
+fetchMealsRecommendation } from '../services/fetchRecommendation';
 import '../styles/RecipeDetails.css';
 
-// const LIMIT_OF_RECOMMENDATION = 5;
+const LIMIT_OF_RECOMMENDATION = 5;
 
-function RecipeDetails({ location: { pathname } }) {
+function RecipeDetails() {
+  const { pathname } = useLocation();
   const [recipeDetails, setRecipeDetails] = useState([]);
-  // const [recommendation, setRecommendation] = useState([]);
+  const [recommendation, setRecommendation] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
 
   const urlSplit = pathname.split('/');
 
   const fetchDetail = async () => {
-    const teste = getStorage('doneRecipes');
-    // console.log(JSON.parse(doneRecipes));
-    // console.log('oi', teste);
-    setDoneRecipes(teste);
+    setDoneRecipes(getStorage('doneRecipes'));
+
     if (pathname.includes('meals')) {
       const mealDetails = await fetchDetailsMeals(urlSplit[2]);
       const drinksRecommendation = await fetchDrinksRecommendation();
@@ -34,7 +34,6 @@ function RecipeDetails({ location: { pathname } }) {
       setRecipeDetails(drinkDetails);
       setRecommendation(mealsRecommendation);
     }
-    // console.log(doneRecipes);
   };
 
   useEffect(() => {
@@ -52,10 +51,10 @@ function RecipeDetails({ location: { pathname } }) {
           />
         ))
       }
-      {/* <h1>Recommended</h1>
+      <h1>Recommended</h1>
       <Carousel>
         {
-          recommendation.filter((_, i) => i <= LIMIT_OF_RECOMMENDATION)
+          recommendation && recommendation.filter((_, i) => i <= LIMIT_OF_RECOMMENDATION)
             .map((sugestion, index) => (
               <CardRecommendation
                 index={ index }
@@ -65,7 +64,7 @@ function RecipeDetails({ location: { pathname } }) {
               />
             ))
         }
-      </Carousel> */}
+      </Carousel>
       {
         doneRecipes && !doneRecipes.some(({ id }) => id === urlSplit[2]) && (
           <button

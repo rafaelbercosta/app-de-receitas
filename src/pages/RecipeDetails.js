@@ -14,7 +14,7 @@ import '../styles/RecipeDetails.css';
 
 function RecipeDetails() {
   const { pathname } = useLocation();
-  const [ setRecipeDetails ] = useState([]);
+ // const [ setRecipeDetails ] = useState([]);
   // const [recommendation, setRecommendation] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
 
@@ -28,12 +28,12 @@ function RecipeDetails() {
     if (pathname.includes('meals')) {
       const mealDetails = await fetchDetailsMeals(urlSplit[2]);
       // const drinksRecommendation = await fetchDrinksRecommendation();
-      setRecipeDetails(mealDetails);
+     // setRecipeDetails(mealDetails);
     //  setRecommendation(drinksRecommendation);
     } else {
       const drinkDetails = await fetchDetailsDrinks(urlSplit[2]);
       //  const mealsRecommendation = await fetchMealsRecommendation();
-      setRecipeDetails(drinkDetails);
+     // setRecipeDetails(drinkDetails);
       // setRecommendation(mealsRecommendation);
     }
     // console.log(doneRecipes);

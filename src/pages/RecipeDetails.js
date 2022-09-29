@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // import Carousel from 'react-bootstrap/Carousel';
 import { useLocation } from 'react-router-dom';
-import CardDetails from '../components/CardDetails';
+// import CardDetails from '../components/CardDetails';
 // import CardRecommendation from '../components/CardRecommendation';
 import { getStorage } from '../services/Storage';
 import { fetchDetailsDrinks, fetchDetailsMeals } from '../services/fetchDetails';
@@ -14,7 +14,7 @@ import '../styles/RecipeDetails.css';
 
 function RecipeDetails() {
   const { pathname } = useLocation();
-  const [recipeDetails, setRecipeDetails] = useState([]);
+  const [ setRecipeDetails] = useState([]);
   // const [recommendation, setRecommendation] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
 

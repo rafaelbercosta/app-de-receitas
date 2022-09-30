@@ -1,13 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { setStorage, getStorage } from '../services/Storage';
-import recipesContext from '../context/RecipesContext';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function FavoriteBtn({ recipe }) {
-  const { setFavoriteRecipes, favoriteRecipes } = useContext(recipesContext);
   const { pathname } = useLocation();
 
   const id = pathname.includes('/meals') ? recipe.idMeal : recipe.idDrink;
@@ -15,7 +13,7 @@ function FavoriteBtn({ recipe }) {
     .some((favorite) => favorite.id === id);
 
   const handleClickFavoriteBtn = () => {
-    const addNewFavorite = [...favoriteRecipes,
+    const addNewFavorite = [...getStorage('favoriteRecipes'),
       {
         id: pathname.includes('/meals') ? recipe.idMeal : recipe.idDrink,
         type: pathname.includes('/meals') ? 'meal' : 'drink',
@@ -26,15 +24,15 @@ function FavoriteBtn({ recipe }) {
         image: pathname.includes('/meals') ? recipe.strMealThumb : recipe.strDrinkThumb,
       }];
 
-    const removeFavorite = [...favoriteRecipes].filter((favorite) => favorite.id !== id);
+    const removeFavorite = [...getStorage('favoriteRecipes')]
+      .filter((favorite) => favorite.id !== id);
 
     if (isFavorite) {
       setStorage('favoriteRecipes', removeFavorite);
-      setFavoriteRecipes(removeFavorite);
+
       console.log(isFavorite, favoriteRecipes, id);
     } else {
       setStorage('favoriteRecipes', addNewFavorite);
-      setFavoriteRecipes(addNewFavorite);
     }
   };
 

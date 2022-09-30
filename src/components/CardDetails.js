@@ -1,42 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { setStorage, getStorage } from '../services/Storage';
-import recipesContext from '../context/RecipesContext';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import FavoriteBtn from './FavoriteBtn';
+import ShareBtn from './ShareBtn';
 
 function CardDetails({ recipe, pathname }) {
-  const { setFavoriteRecipes, favoriteRecipes } = useContext(recipesContext);
-
   const objectEntries = Object.entries(recipe);
-
-  const id = pathname.includes('/meals') ? recipe.idMeal : recipe.idDrink;
-  const isFavorite = [...getStorage('favoriteRecipes')]
-    .some((favorite) => favorite.id === id);
-
-  const handleClickFavoriteBtn = () => {
-    const addNewFavorite = [...favoriteRecipes,
-      {
-        id: pathname.includes('/meals') ? recipe.idMeal : recipe.idDrink,
-        type: pathname.includes('/meals') ? 'meal' : 'drink',
-        nationality: pathname.includes('/meals') ? recipe.strArea : '',
-        category: recipe.strCategory,
-        alcoholicOrNot: pathname.includes('/meals') ? '' : recipe.strAlcoholic,
-        name: pathname.includes('/meals') ? recipe.strMeal : recipe.strDrink,
-        image: pathname.includes('/meals') ? recipe.strMealThumb : recipe.strDrinkThumb,
-      }];
-
-    const removeFavorite = [...favoriteRecipes].filter((favorite) => favorite.id !== id);
-
-    if (isFavorite) {
-      setStorage('favoriteRecipes', removeFavorite);
-      setFavoriteRecipes(removeFavorite);
-      console.log(isFavorite, favoriteRecipes, id);
-    } else {
-      setStorage('favoriteRecipes', addNewFavorite);
-      setFavoriteRecipes(addNewFavorite);
-    }
-  };
 
   return (
     <div>
@@ -48,19 +16,8 @@ function CardDetails({ recipe, pathname }) {
               alt={ recipe.strMeal }
               data-testid="recipe-photo"
             />
-            <button
-              type="button"
-              data-testid="share-btn"
-            >
-              Share
-            </button>
-            <img
-              aria-hidden="true"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              alt="blackHeartIcon"
-              data-testid="favorite-btn"
-              onClick={ handleClickFavoriteBtn }
-            />
+            <ShareBtn />
+            <FavoriteBtn recipe={ recipe } />
             <h1 data-testid="recipe-title">{ recipe.strMeal }</h1>
             <p data-testid="recipe-category">{recipe.strCategory}</p>
             <ul>
@@ -93,19 +50,8 @@ function CardDetails({ recipe, pathname }) {
               alt={ recipe.strDrink }
               data-testid="recipe-photo"
             />
-            <button
-              type="button"
-              data-testid="share-btn"
-            >
-              Share
-            </button>
-            <img
-              aria-hidden="true"
-              src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
-              alt="blackHeartIcon"
-              data-testid="favorite-btn"
-              onClick={ handleClickFavoriteBtn }
-            />
+            <ShareBtn />
+            <FavoriteBtn recipe={ recipe } />
             <h1 data-testid="recipe-title">{ recipe.strDrink }</h1>
             <p data-testid="recipe-category">
               {

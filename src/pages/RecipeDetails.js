@@ -30,6 +30,7 @@ function RecipeDetails() {
       const mealDetails = await fetchDetailsMeals(urlSplit[2]);
       const drinksRecommendation = await fetchDrinksRecommendation();
       setRecipeDetails(mealDetails);
+      console.log(drinksRecommendation);
       setRecommendation(drinksRecommendation);
     } else {
       const drinkDetails = await fetchDetailsDrinks(urlSplit[2]);

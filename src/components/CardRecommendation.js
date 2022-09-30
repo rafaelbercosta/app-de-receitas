@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 function CardRecommendation({ index, pathname, sugestion }) {
   return (
     <Carousel.Item
-      className="carousel-item"
       data-testid={ `${index}-recommendation-card` }
     >
       <img
+        className="carousel-image"
         src={ pathname.includes('meals') ? sugestion.strDrinkThumb
           : sugestion.strMealThumb }
         alt={ pathname.includes('meals') ? sugestion.strDrink

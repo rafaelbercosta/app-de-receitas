@@ -1,27 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Carousel from 'react-bootstrap/Carousel';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import CardDetails from '../components/CardDetails';
 import CardRecommendation from '../components/CardRecommendation';
 import { getStorage } from '../services/Storage';
 import { fetchDetailsDrinks, fetchDetailsMeals } from '../services/fetchDetails';
 import { fetchDrinksRecommendation,
-fetchMealsRecommendation } from '../services/fetchRecommendation';
+  fetchMealsRecommendation } from '../services/fetchRecommendation';
 import '../styles/RecipeDetails.css';
 
 const LIMIT_OF_RECOMMENDATION = 5;
 
 function RecipeDetails() {
   const { pathname } = useLocation();
+  const history = useHistory();
+
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recommendation, setRecommendation] = useState([]);
   const [doneRecipes, setDoneRecipes] = useState([]);
+  const [recipesInProgress, setRecipesInProgress] = useState({});
 
   const urlSplit = pathname.split('/');
 
   const fetchDetail = async () => {
     setDoneRecipes(getStorage('doneRecipes'));
+    setRecipesInProgress(getStorage('inProgressRecipes'));
 
     if (pathname.includes('meals')) {
       const mealDetails = await fetchDetailsMeals(urlSplit[2]);
@@ -40,10 +43,14 @@ function RecipeDetails() {
     fetchDetail();
   }, []);
 
+  const handleClickStartRecipeBtn = () => {
+    history.push(`${pathname}/in-progress`);
+  };
+
   return (
     <section>
       {
-        recipeDetails.map((details, i) => (
+        recipeDetails && recipeDetails.map((details, i) => (
           <CardDetails
             key={ `${i}-${pathname}` }
             recipe={ details }
@@ -66,24 +73,24 @@ function RecipeDetails() {
         }
       </Carousel>
       {
-        doneRecipes && !doneRecipes.some(({ id }) => id === urlSplit[2]) && (
+        !doneRecipes.some(({ id }) => id === urlSplit[2]) && (
           <button
             className="start-recipe-btn"
             data-testid="start-recipe-btn"
             type="button"
+            onClick={ handleClickStartRecipeBtn }
           >
-            Start Recipe
+            {
+              recipesInProgress[urlSplit[1]]
+              && recipesInProgress[urlSplit[1]][urlSplit[2]]
+                ? 'Continue Recipe'
+                : 'Start Recipe'
+            }
           </button>
         )
       }
     </section>
   );
 }
-
-RecipeDetails.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
-};
 
 export default RecipeDetails;

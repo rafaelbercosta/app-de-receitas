@@ -110,6 +110,7 @@ function SearchBar({ page }) {
           data-testid="ingredient-search-radio"
           onChange={ () => { setFilterSelected('ingredient'); } }
         />
+        Ingredient
       </label>
       <label htmlFor="name">
         <input
@@ -120,6 +121,7 @@ function SearchBar({ page }) {
           data-testid="name-search-radio"
           onChange={ () => { setFilterSelected('name'); } }
         />
+        Name
       </label>
       <label htmlFor="first-letter">
         <input
@@ -130,6 +132,7 @@ function SearchBar({ page }) {
           data-testid="first-letter-search-radio"
           onChange={ () => { setFilterSelected('letter'); } }
         />
+        First Letter
       </label>
       <button
         type="button"

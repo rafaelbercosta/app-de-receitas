@@ -22,6 +22,7 @@ const DRINK_BTN = 'drinks-bottom-btn';
 
 const fetchDrinks = Promise.resolve(drinks);
 const ALERT1 = 'Your search must have only 1 (one) character';
+const ALERT2 = 'Sorry, we haven\'t found any recipes for these filters.';
 
 describe('Teste o componente SearchBar', () => {
   beforeEach(async () => {
@@ -75,7 +76,7 @@ describe('Teste o componente SearchBar', () => {
 
     expect(global.fetch).toBeCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=beef');
   });
-  it('Testa se a busca é feita por primeira letra', () => {
+  it('Testa se a busca de comidas é feita por primeira letra', () => {
     const searchInput = screen.getByTestId(SEARCH_INPUT);
     userEvent.type(searchInput, 'b');
     const firstLetterRadio = screen.getByTestId(FIRST_LETTER_RADIO);
@@ -101,7 +102,8 @@ describe('Teste o componente SearchBar', () => {
 
     expect(window.alert).toBeCalledWith(ALERT1);
   });
-  it('Testa se não achar o termo da pesquisa emite um alerta', async () => {
+
+  it('Testa se não achar o termo da pesquisa por nome emite um alerta', async () => {
     global.fetch = jest.fn(() => Promise.resolve({
       json: () => Promise.resolve({ meals: null }),
     }));
@@ -112,7 +114,35 @@ describe('Teste o componente SearchBar', () => {
     const searchButton = screen.getByTestId(SEARCH_BTN2);
     userEvent.click(searchButton);
 
-    await waitFor(() => expect(window.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.'));
+    await waitFor(() => expect(window.alert).toBeCalledWith(ALERT2));
+  });
+  it('Testa se não achar o termo da pesquisa por ingrediente emite um alerta', async () => {
+    const promise = Promise.resolve({ meals: null });
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => promise,
+    }));
+    const searchInput = screen.getByTestId(SEARCH_INPUT);
+    userEvent.type(searchInput, 'xablau');
+    const ingredients = screen.getByTestId(INGREDIENT_RADIO);
+    userEvent.click(ingredients);
+    const searchButton = screen.getByTestId(SEARCH_BTN2);
+    userEvent.click(searchButton);
+
+    await waitFor(() => expect(window.alert).toBeCalledWith(ALERT2));
+  });
+  it('Testa se não achar o termo da pesquisa pela primeira letra emite um alerta', async () => {
+    const promisee = Promise.resolve({ meals: null });
+    global.fetch = jest.fn(() => Promise.resolve({
+      json: () => promisee,
+    }));
+    const searchInput = screen.getByTestId(SEARCH_INPUT);
+    userEvent.type(searchInput, 'x');
+    const firstLetterRadio = screen.getByTestId(FIRST_LETTER_RADIO);
+    userEvent.click(firstLetterRadio);
+    const searchButton = screen.getByTestId(SEARCH_BTN2);
+    userEvent.click(searchButton);
+
+    await waitFor(() => expect(window.alert).toBeCalledWith(ALERT2));
   });
   it('Testa se não achar um drink pelo termo da pesquisa emite um alerta', async () => {
     global.fetch = jest.fn(() => Promise.resolve({
@@ -125,7 +155,7 @@ describe('Teste o componente SearchBar', () => {
     const searchButton = screen.getByTestId(SEARCH_BTN2);
     userEvent.click(searchButton);
 
-    await waitFor(() => expect(window.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.'));
+    await waitFor(() => expect(window.alert).toBeCalledWith(ALERT2));
   });
   it('Testa se busca drinks na API correta', async () => {
     global.fetch = jest.fn(() => Promise.resolve({

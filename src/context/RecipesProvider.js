@@ -7,9 +7,11 @@ function RecipesProvider({ children }) {
   const [drinks, setDrinks] = useState([]);
   const [meals, setMeals] = useState([]);
   const [recipesToRender, setRecipesToRender] = useState([]);
-  const [isFilter, setIsFilter] = useState(false);
   const [whatIsRender, setWhatIsRender] = useState('meals');
+  const [isFilter, setIsFilter] = useState(false);
   const [CategoriesFilter, setCategoriesFilter] = React.useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
+
   const contextValues = {
     user,
     setUser,
@@ -19,13 +21,16 @@ function RecipesProvider({ children }) {
     setMeals,
     recipesToRender,
     setRecipesToRender,
-    isFilter,
-    setIsFilter,
     whatIsRender,
     setWhatIsRender,
     CategoriesFilter,
     setCategoriesFilter,
+    favoriteRecipes,
+    setFavoriteRecipes,
+    isFilter,
+    setIsFilter,
   };
+
   return (
     <recipesContext.Provider value={ contextValues }>
       { children }

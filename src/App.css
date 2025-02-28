@@ -8,37 +8,24 @@
   height: 100vh;
   justify-content: center;
   width: 100%;
+  padding: 0 20px; /* Adicionando um pequeno padding nas laterais */
 }
 
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
+  width: 100%; /* Aumentando a largura para ser responsiva */
 }
-
-/*
-#iceLeft {
-  animation: clink .8s infinite ease;
-  opacity: 0.6;
-  transform-origin: 36px 66px;
-}
-
-#iceRight {
-  animation: clink .8s .2s infinite ease;
-  opacity: 0.6;
-  transform-origin: 60px 78px;
-}
-*/
 
 .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
-  font-family: Montserrat , sans-serif;
+  font-family: Montserrat, sans-serif;
   font-size: 3em;
   font-weight: 900;
 }
 
 @keyframes shake {
-
   0% {
     transform: rotate(5deg);
   }
@@ -53,7 +40,6 @@
 }
 
 @keyframes clink {
-
   0% {
     transform: rotate(-10deg);
   }
@@ -64,5 +50,51 @@
 
   100% {
     transform: rotate(-10deg);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .meals {
+    justify-content: flex-start;
+    height: auto; /* A altura não precisa ser 100vh em telas pequenas */
+    padding: 20px; /* Um pouco mais de padding para telas pequenas */
+  }
+
+  .meals > .logo {
+    font-size: 2em; /* Reduzindo o tamanho da logo em telas menores */
+  }
+
+  .rocksGlass {
+    max-height: 60vh; /* Reduzindo a altura máxima em telas menores */
+    width: 80%; /* Ajustando a largura da imagem */
+  }
+
+  /* Ajustando imagens para não ficarem muito grandes */
+  .meals img {
+    max-width: 80%; /* Limita a largura máxima das imagens */
+    height: auto; /* Garante que a altura das imagens seja proporcional */
+  }
+}
+
+@media (max-width: 480px) {
+  .meals {
+    justify-content: flex-start;
+    padding: 15px; /* Ajustando o padding */
+  }
+
+  .meals > .logo {
+    font-size: 1.5em; /* Reduzindo ainda mais o tamanho da logo */
+  }
+
+  .rocksGlass {
+    max-height: 50vh; /* Reduzindo a altura máxima em telas muito pequenas */
+    width: 70%; /* Ajustando a largura para telas muito pequenas */
+  }
+
+  /* Ajustando imagens para telas muito pequenas */
+  .meals img {
+    max-width: 70%; /* Reduzindo ainda mais a largura máxima das imagens */
+    height: auto; /* Mantém a proporcionalidade */
   }
 }

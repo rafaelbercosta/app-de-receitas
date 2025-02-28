@@ -30,7 +30,6 @@ function RecipeDetails() {
       const mealDetails = await fetchDetailsMeals(urlSplit[2]);
       const drinksRecommendation = await fetchDrinksRecommendation();
       setRecipeDetails(mealDetails);
-      console.log(drinksRecommendation);
       setRecommendation(drinksRecommendation);
     } else {
       const drinkDetails = await fetchDetailsDrinks(urlSplit[2]);
@@ -62,8 +61,8 @@ function RecipeDetails() {
       <h1>Recommended</h1>
       <Carousel>
         {
-          recommendation && recommendation.filter((_, i) => i <= LIMIT_OF_RECOMMENDATION)
-            .map((sugestion, index) => (
+          Array.isArray(recommendation) && recommendation.length > 0 ? (
+            recommendation.slice(0, LIMIT_OF_RECOMMENDATION).map((sugestion, index) => (
               <CardRecommendation
                 index={ index }
                 sugestion={ sugestion }
@@ -71,6 +70,9 @@ function RecipeDetails() {
                 key={ `recommendation-${index}` }
               />
             ))
+          ) : (
+            <p>No recommendations available</p>
+          )
         }
       </Carousel>
       {
@@ -95,3 +97,4 @@ function RecipeDetails() {
 }
 
 export default RecipeDetails;
+
